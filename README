@@ -6,4 +6,5 @@ Adding aptoma-library as a submodule
 Adding to Zend Framework
 ====================================
 1. git submodule add git@github.com:aptoma/aptoma-library.git library/aptoma-library
-2. ln -s library/aptoma-library/lib/Aptoma library/Aptoma
+3. cd library
+3. ln -s aptoma-library/lib/Aptoma Aptoma 
