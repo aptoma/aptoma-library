@@ -15,10 +15,13 @@ class Aptoma_Output_Helper extends Zend_Controller_Action_Helper_Abstract
 				$this->disableLayout();
 				break;
 
-			case 'html':
+/*
+ Setting this will override settings like disabling the layout or rendering i the controller
+ 			case 'html':
 				$viewRenderer->setNoRender(false);
 				$this->enableLayout();
 				break;
+*/
 		}
     }
 
