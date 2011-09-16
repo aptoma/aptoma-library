@@ -25,7 +25,8 @@ class Aptoma_Output_Helper extends Zend_Controller_Action_Helper_Abstract
 		}
     }
 
-    public function postDispatch() {
+    public function postDispatch()
+    {
     	$this->preDispatch();
 
     	$outputFormat = $this->getRequest()->getParam('format', 'html');

@@ -1,3 +1,4 @@
 <?php
-class Aptoma_Util_SystemException extends Exception {
+class Aptoma_Util_SystemException extends Exception
+{
 }
