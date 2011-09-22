@@ -34,7 +34,6 @@ class Aptoma_Error_HandlerTest extends PHPUnit_Framework_TestCase
 
 		$this->assertTrue($doubleEnableException);
 
-
 		//Test disable
 		Aptoma_Error_Handler::disable();
 
