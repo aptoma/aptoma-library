@@ -1,5 +1,5 @@
 <?php
-// TODO: needs some cleanup .. (copied from AFW)
+// TODO: needs some cleanup ..
 class Aptoma_Util_Array
 {
 
@@ -101,7 +101,7 @@ class Aptoma_Util_Array
 	 * $a['name'] = array('Hansen', 'Jensen', 'Fransen');
 	 * $a['age'] = array(24, 56, 35);
 	 *
-	 * $a = AFWGlobal::arraySortByField($a, 'name');
+	 * $a = Aptoma_Util_Array::sortByField($a, 'name');
 	 * returns
 	 * $a['name'] = array('Fransen', 'Hansen', 'Jensen');
 	 * $a['age'] = array(35, 24, 356);
