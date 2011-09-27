@@ -1,6 +1,6 @@
 <?php
 // TODO: needs some cleanup .. (copied from AFW)
-class DF_Util_Array
+class Aptoma_Util_Array
 {
 
 	/** Sorts an array of objects by a specific property
