@@ -10,7 +10,7 @@ class Aptoma_Util_Array
 	 * @param string|num $sortproperty Search property (e.g. "created") or function (e.g. "getCreated()")
 	 * @param bool $desc (optional) Sort array desc
 	 * @return array The sorted array
-	 *  
+	 *
 	 */
 	public static function sortObjects($objectarray, $sortproperty, $desc = false)
 	{
@@ -134,4 +134,22 @@ class Aptoma_Util_Array
 		return array($search_field_key => $a, $b_key => $b);
 	}
 
+	/**
+	 * Remove a set of keys and its value from an array.
+	 * Note this is NOT recursive.
+	 *
+	 * @param array $array
+	 * @param array $excludeKeys
+	 * @return array
+	 */
+	public static function excludeKeys(array $array, array $excludeKeys)
+	{
+		foreach ($array as $key=>$value) {
+			if (!in_array($key, $excludeKeys)) {
+				unset($array[$key]);
+			}
+		}
+
+		return $array;
+	}
 }
