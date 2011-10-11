@@ -144,12 +144,13 @@ class Aptoma_Util_Array
 	 */
 	public static function excludeKeys(array $array, array $excludeKeys)
 	{
-		foreach ($array as $key=>$value) {
-			if (!in_array($key, $excludeKeys)) {
+		foreach (array_keys($array) as $key) {
+			if (in_array($key, $excludeKeys)) {
 				unset($array[$key]);
 			}
 		}
 
 		return $array;
 	}
+
 }
