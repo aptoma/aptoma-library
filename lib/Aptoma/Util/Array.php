@@ -153,4 +153,41 @@ class Aptoma_Util_Array
 		return $array;
 	}
 
+	/**
+	 * Extract specific keys with its values from each array in $arrays
+	 * This is not recursive / deep
+	 *
+	 * @param array $keys
+	 * @param array $arrays
+	 * @return array
+	 */
+	public static function extractKeysFromList(array $keys, array $arrays)
+	{
+		$result = array();
+		foreach ($arrays as $array) {
+			$result[] = self::extractKeys($keys, $array);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Extract specific keys with its values an array
+	 * This is not recursive / deep
+	 *
+	 * @param array $keys
+	 * @param array $array
+	 * @return array
+	 */
+	public static function extractKeys(array $keys, array $array)
+	{
+		$result = array();
+		foreach ($keys as $key) {
+			if (isset($array[$key])) {
+				$result[$key] = $array[$key];
+			}
+		}
+
+		return $result;
+	}
 }
