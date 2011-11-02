@@ -2,77 +2,29 @@
 // TODO: needs some cleanup ..
 class Aptoma_Util_Array
 {
-
-	/** Sorts an array of objects by a specific property
+	/**
+	 * Sort an array of objects based on a object property.
 	 *
-	 * @author stefan@aptoma.com, michael@aptoma.com
-	 * @param array $objectarray List of objects
-	 * @param string|num $sortproperty Search property (e.g. "created") or function (e.g. "getCreated()")
-	 * @param bool $desc (optional) Sort array desc
-	 * @return array The sorted array
-	 *
+	 * @param array $objects
+	 * @param string $propertyName
+	 * @param boolean $desc
+	 * @return mixed the sorted array or false if $objects wasnt an array.
 	 */
-	public static function sortObjects($objectarray, $sortproperty, $desc = false)
+	public static function sortObjects($objects, $propertyName, $desc = false)
 	{
-		if (is_array($sortproperty)) {
-			return self::sortObjectsByPriority($objectarray, $sortproperty, $desc);
+		if (!is_array($objects)) {
+			return false;
 		}
-		if (isset($objectarray[0])) {
-			if (mb_strpos($sortproperty, '()') > 0) {
-				$is_numeric = is_numeric($objectarray[0]->{str_replace('()', '', $sortproperty)}());
-			} else {
-				$is_numeric = is_numeric($objectarray[0]->{$sortproperty});
-			}
-		}
-		if (isset($objectarray[0]) &&$is_numeric) {
-			if ($desc) {
-				$code = ' return($b->'.$sortproperty.' - $a->'.$sortproperty.');';
-			} else {
-				$code = ' return($a->'.$sortproperty.' - $b->'.$sortproperty.');';
-			}
-		} else {
-			if ($desc) {
-				$code = 'if ($a->'.$sortproperty.' < $b->'.$sortproperty.') return 1;
-					if ($a->'.$sortproperty.' > $b->'.$sortproperty.') return -1;
-					return 0;';
-			} else {
-				$code = 'if ($a->'.$sortproperty.' < $b->'.$sortproperty.') return -1;
-					if ($a->'.$sortproperty.' > $b->'.$sortproperty.') return 1;
-					return 0;';
-			}
-		}
-		if (self::isAssociative($objectarray)) {
-			uasort($objectarray, create_function('$a, $b', $code));
-		} else {
-			usort($objectarray, create_function('$a, $b', $code));
-		}
-		return $objectarray;
-	}
 
-	/** Sorts an array of objects by a priority list of properties
-	 *
-	 * @author micheal@aptoma.com
-	 * @param array $objectarray List of objects
-	 * @param array $sortproperty Priority list of search properties (e.g. "created") or function (e.g. "getCreated()")
-	 * @param bool $desc (optional) Sort array desc
-	 * @return array The sorted array
-	 */
-	public static function sortObjectsByPriority($objectarray, $sortproperties, $desc = false)
-	{
-		$cmp_op = ($desc) ? '<' : '>';
+		usort($objects, function($a, $b) use ($propertyName, $desc) {
+			if ($a->$propertyName == $b->$propertyName) {
+				return 0;
+			}
 
-		$code = '';
-		foreach ($sortproperties as $prop) {
-			$code .= 'if ($a->'.$prop.' != $b->'.$prop.') return $a->'.$prop.' '.$cmp_op.' $b->'.$prop.';';
-		}
-		$code .= 'return 0;';
+			return ($a->$propertyName < $b->$propertyName) ? ($desc ? 1 : -1) : ($desc ? -1 : 1);
+		});
 
-		if (self::isAssociative($objectarray)) {
-			uasort($objectarray, create_function('$a, $b', $code));
-		} else {
-			usort($objectarray, create_function('$a, $b', $code));
-		}
-		return $objectarray;
+		return $objects;
 	}
 
 	/** Checks if an array is associative
