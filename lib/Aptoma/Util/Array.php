@@ -142,4 +142,21 @@ class Aptoma_Util_Array
 
 		return $result;
 	}
+
+	/**
+	 * Check all values if it validates agains FILTER_VALIDATE_INT
+	 *
+	 * @param array $array
+	 * @return boolean
+	 */
+	public static function filterValidateInt(array $array)
+	{
+		foreach ($array as $value) {
+			if (!filter_var($value, FILTER_VALIDATE_INT)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
