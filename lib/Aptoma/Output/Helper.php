@@ -29,7 +29,13 @@ class Aptoma_Output_Helper extends Zend_Controller_Action_Helper_Abstract
     {
     	$this->preDispatch();
 
-    	$outputFormat = $this->getRequest()->getParam('format', 'html');
+		// If something already has done some output, leave it alone. Needed when unit-testing with Zend_Test_PHPUnit_ControllerTestCase
+		// and the action is using the JSON helper (without this fix we'll get any empty JSON response when testing).
+		if ($this->getResponse()->getBody() !== '') {
+			return;
+		}
+
+		$outputFormat = $this->getRequest()->getParam('format', 'html');
 		switch ($outputFormat) {
 			case 'json':
 				$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
