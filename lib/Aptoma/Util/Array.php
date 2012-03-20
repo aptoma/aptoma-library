@@ -46,44 +46,47 @@ class Aptoma_Util_Array
 	}
 
 	/**
-	 * Sorts two-dimension array by key name
+	 * Sort a multi-dimensional array by a value in a sub-array.
 	 *
 	 * <code>
-	 * $a = array();
-	 * $a['name'] = array('Hansen', 'Jensen', 'Fransen');
-	 * $a['age'] = array(24, 56, 35);
 	 *
-	 * $a = Aptoma_Util_Array::sortByField($a, 'name');
-	 * returns
-	 * $a['name'] = array('Fransen', 'Hansen', 'Jensen');
-	 * $a['age'] = array(35, 24, 356);
+	 * $songs = array(
+	 *	  '1' => array('artist' => 'The Smashing Pumpkins', 'songname' => 'Soma'),
+	 *	  '2' => array('artist' => 'The Decemberists', 'songname' => 'The Island'),
+	 *	  '3' => array('artist' => 'Fleetwood Mac', 'songname' => 'Second-hand News')
+	 * );
+	 *
+	 * $songs = Aptoma_Util_Array::sortBySubValue($songs, 'artist');
+	 *
+	 * And $songs should now be:
+	 *
+	 * array(
+	 *	  '1' => array('artist' => 'Fleetwood Mac', 'songname' => 'Second-hand News')
+	 *	  '2' => array('artist' => 'The Decemberists', 'songname' => 'The Island'),
+	 *	  '3' => array('artist' => 'The Smashing Pumpkins', 'songname' => 'Soma'),
+	 * );
+	 *
 	 * </code>
 	 *
-	 * @param array $array Array to sort
-	 * @param string $search_field_key Key name of array to sort
-	 * @param boolean $desc Order
+	 * @param array $a The array to sort
+	 * @param string $subkey Which key should be used for sorting
+	 * @param boolean [$desc] The sorting order
 	 * @return array
 	 */
-	public static function sortByField($array, $search_field_key, $desc = false)
-	{
-		$a = $b = array();
-		$b_key = "";
-		foreach ($array as $k => $v) {
-			if ($k == $search_field_key) {
-				$a = $v;
-			} else {
-				$b = $v;
-				$b_key = $k;
-			}
-		}
-
-		array_multisort($a, $b);
-
-		if ($desc) {
-			$a = array_reverse($a);
-			$b = array_reverse($b);
-		}
-		return array($search_field_key => $a, $b_key => $b);
+	public function sortBySubValue($a, $subkey, $desc = false) {
+		$b = array();
+	 	foreach($a as $k => $v) {
+	 		$b[$k] = strtolower($v[$subkey]);
+	 	}
+	 	if ($desc) {
+	 		arsort($b);
+	 	} else {
+	 		asort($b);
+	 	}
+	 	foreach($b as $key => $val) {
+	 		$c[] = $a[$key];
+	 	}
+	 	return $c;
 	}
 
 	/**
