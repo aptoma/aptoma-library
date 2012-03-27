@@ -73,7 +73,7 @@ class Aptoma_Util_Array
 	 * @param boolean [$desc] The sorting order
 	 * @return array
 	 */
-	public function sortBySubValue($a, $subkey, $desc = false) {
+	public static function sortBySubValue($a, $subkey, $desc = false) {
 		$b = array();
 	 	foreach($a as $k => $v) {
 	 		$b[$k] = strtolower($v[$subkey]);
