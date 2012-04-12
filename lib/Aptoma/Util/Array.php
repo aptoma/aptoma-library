@@ -77,7 +77,7 @@ class Aptoma_Util_Array
 	{
 		$b = array();
 	 	foreach ($a as $k => $v) {
-	 		$b[$k] = strtolower($v[$subkey]);
+	 		$b[$k] = mb_strtolower($v[$subkey]);
 	 	}
 	 	if ($desc) {
 	 		arsort($b);
