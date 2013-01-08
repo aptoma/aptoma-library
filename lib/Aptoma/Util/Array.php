@@ -84,7 +84,7 @@ class Aptoma_Util_Array
 	 	} else {
 	 		asort($b);
 	 	}
-	 	foreach ($b as $key => $val) {
+	 	foreach (array_keys($b) as $key) {
 	 		$c[] = $a[$key];
 	 	}
 	 	return $c;

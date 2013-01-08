@@ -33,6 +33,7 @@ abstract class Aptoma_Util_String
 	 * Callback function for underscoreToCamelCase
 	 * @param array $matches
 	 * @return string
+	 * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
 	 */
 	private static function underscoreToCamelCaseCallback($matches)
 	{
