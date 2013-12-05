@@ -10,7 +10,7 @@ class Aptoma_Controller_Exception extends Exception
         if (!is_null($previous)) {
             parent::__construct($previous->getMessage(), $code, $previous);
         } else {
-            parent::__construct($userMessage);
+            parent::__construct($userMessage, $code);
         }
     }
 
