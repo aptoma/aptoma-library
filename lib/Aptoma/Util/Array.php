@@ -168,4 +168,66 @@ class Aptoma_Util_Array
 
         return true;
     }
+
+    /**
+     * Converts an array with dotted keys e.g (foo.bar.monkey) to an array
+     * E.g array('foo.bar.monkey' => 'banana') becomes array('foo' => array('bar' => array('monkey' => 'banana')));
+     * @param  array  $array
+     * @return array
+     */
+    public static function dotStringsToDeepArray(array $array)
+    {
+        $assoc = array();
+        foreach ($array as $dots => $value) {
+            $keys = explode('.', $dots);
+            $currentArray = null;
+            while ($key = array_shift($keys)) {
+                if (is_null($currentArray)) {
+                    if (!isset($assoc[$key])) {
+                        $assoc[$key] = array();
+                    }
+                    $currentArray = &$assoc[$key];
+                    continue;
+                }
+                if (!isset($currentArray[$key])) {
+                    $currentArray[$key] = array();
+                }
+                $currentArray = &$currentArray[$key];
+            }
+
+            $currentArray = $value;
+            unset($currentArray);
+
+        }
+        return $assoc;
+    }
+
+    /**
+     * Converts values to integers and booleans
+     * Note ! modifies the values on the supplied array.
+     * @param  $array
+     */
+    public static function convertValuesToCorrectType(&$array)
+    {
+        array_walk_recursive($array, function(&$val, $key) {
+            if (!is_string($val)) {
+                return;
+            }
+            if (ctype_digit($val)) {
+                $val = (int)$val;
+                return;
+            }
+
+            if (strtoupper($val) === 'TRUE') {
+                $val = true;
+                return;
+            }
+
+            if (strtoupper($val) === 'FALSE') {
+                $val = false;
+                return;
+            }
+        });
+    }
+
 }
