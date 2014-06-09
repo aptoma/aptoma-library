@@ -209,7 +209,7 @@ class Aptoma_Util_Array
      */
     public static function convertValuesToCorrectType(&$array)
     {
-        array_walk_recursive($array, function(&$val, $key) {
+        array_walk_recursive($array, function(&$val) {
             if (!is_string($val)) {
                 return;
             }
