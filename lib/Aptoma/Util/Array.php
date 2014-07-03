@@ -209,25 +209,28 @@ class Aptoma_Util_Array
      */
     public static function convertValuesToCorrectType(&$array)
     {
-        array_walk_recursive($array, function(&$val) {
-            if (!is_string($val)) {
-                return;
-            }
-            if (ctype_digit($val)) {
-                $val = (int)$val;
-                return;
-            }
+        array_walk_recursive(
+            $array,
+            function (&$val) {
+                if (!is_string($val)) {
+                    return;
+                }
 
-            if (strtoupper($val) === 'TRUE') {
-                $val = true;
-                return;
-            }
+                if (ctype_digit($val)) {
+                    $val = (int)$val;
+                    return;
+                }
 
-            if (strtoupper($val) === 'FALSE') {
-                $val = false;
-                return;
+                if (strtoupper($val) === 'TRUE') {
+                    $val = true;
+                    return;
+                }
+
+                if (strtoupper($val) === 'FALSE') {
+                    $val = false;
+                    return;
+                }
             }
-        });
+        );
     }
-
 }
